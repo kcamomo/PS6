@@ -76,7 +76,7 @@ public class PersonEditDialogController {
         streetField.setText(person.getStreet());
         postalCodeField.setText(Integer.toString(person.getPostalCode()));
         cityField.setText(person.getCity());
-        birthdayField.setText(DateUtil.format(person.getBirthday()));
+        birthdayField.setText(person.getBirthday().toString());
         birthdayField.setPromptText("dd.mm.yyyy");
         
     	//PS6 - Calling the addPerson method
@@ -105,7 +105,16 @@ public class PersonEditDialogController {
             person.setStreet(streetField.getText());
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setCity(cityField.getText());
-            person.setBirthday(DateUtil.parse(birthdayField.getText()));
+            
+            Date dBirthDay = null;
+    		try {
+    			dBirthDay = new SimpleDateFormat("dd/MM/yyyy").parse(birthdayField.getText());
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            
+            person.setBirthday(dBirthDay);
             okClicked = true;
             dialogStage.close();
         }
